@@ -1,5 +1,5 @@
 {
-    "name": "linkorb/etcd-php",
+    "name": "pltrm/etcd-php",
     "description": "Etcd client library for PHP",
     "homepage": "http://www.github.com/linkorb/etcd-php",
     "keywords": [
