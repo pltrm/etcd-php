@@ -15,7 +15,7 @@ abstract class BaseTest extends TestCase
 
     protected function setUp()
     {
-        $this->client = new Client();
+        $this->client = new Client('http://etcd:2379'); // for docker instance
         $this->client->mkdir($this->dirname);
         $this->client->setRoot($this->dirname);
     }
