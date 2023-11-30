@@ -4,10 +4,9 @@ namespace LinkORB\Component\Etcd;
 
 class DirectoryExporter
 {
-    const PATH_SEPARATOR = '/';
+    private const PATH_SEPARATOR = '/';
 
-    /** @var Client */
-    private $client;
+    private Client $client;
 
     public function __construct(Client $client)
     {
@@ -15,7 +14,7 @@ class DirectoryExporter
     }
 
 
-    public function exportArray($directory)
+    public function exportArray(string $directory): array
     {
         $lsResult = $this->client->listDir($directory, true);
         $rootPath = $lsResult['node']['key'];
@@ -39,7 +38,7 @@ class DirectoryExporter
     }
 
 
-    public function exportKeyValuePairs($dir, $recursive = true)
+    public function exportKeyValuePairs(string $dir, bool $recursive = true): array
     {
         $lsResult = $this->client->listDir($dir, $recursive);
         $rootPath = $lsResult['node']['key'];
@@ -60,7 +59,7 @@ class DirectoryExporter
     }
 
 
-    private function createKeyValuePairs($lsResult)
+    private function createKeyValuePairs($lsResult): array
     {
         $result = [];
         $iterator = new \RecursiveArrayIterator($lsResult);
@@ -70,7 +69,7 @@ class DirectoryExporter
     }
 
 
-    private function traverse(&$values, \RecursiveArrayIterator $iterator)
+    private function traverse(&$values, \RecursiveArrayIterator $iterator): void
     {
         while ($iterator->valid()) {
             if ($iterator->hasChildren()) {
@@ -87,7 +86,7 @@ class DirectoryExporter
     }
 
 
-    private function addToDepth(&$array, $path, $value)
+    private function addToDepth(&$array, $path, $value): void
     {
         if (1 === count($path)) {
             $array[current($path)] = $value;
